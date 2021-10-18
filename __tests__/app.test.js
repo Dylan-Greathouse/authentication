@@ -17,13 +17,13 @@ describe('alchemy-app routes', () => {
     const res = await request(app)
       .post('/api/v1/auth/signup')
       .send({
-        email: 'test@email.com',
-        password: 'fake-password',
+        email: 'test@emai.com',
+        password: 'fake-passwor',
         role: 'PALADIN'
       });
     expect(res.body).toEqual({
       id: expect.any(String),
-      email: 'test@email.com',
+      email: 'test@emai.com',
       role: 'PALADIN'
     });
   });
@@ -32,16 +32,16 @@ describe('alchemy-app routes', () => {
 
   it('checks for existing users', async () => {
     await UserService.createUser({
-      email: 'test@email.com',
-      password: 'fake-password',
+      email: 'test@emai.com',
+      password: 'fake-passwor',
       roleTitle: 'PALADIN'
     });
  
     const res = await request(app)
       .post('/api/v1/auth/signup')
       .send({
-        email: 'test@email.com',
-        password: 'fake-password',
+        email: 'test@emai.com',
+        password: 'fake-passwor',
         roleTitle: 'PALADIN'
       });
     
@@ -54,37 +54,37 @@ describe('alchemy-app routes', () => {
   it('logs existing user in via post route', async () => {
     // jest.setTimeout(10000);
     await UserService.createUser({
-      email: 'test@email.com',
-      password: 'fake-password',
-      roleTitle: 'PALADIN'
+      email: 'test@emai.com',
+      password: 'fake-passwor',
+      roleTitle: 'BARD'
     });
     const res = await request(app)
       .post('/api/v1/auth/login')
       .send({ 
-        email: 'test@email.com',
-        password:'fake-password',
-        roleTitle: 'PALADIN'
+        email: 'test@emai.com',
+        password:'fake-passwor',
+        roleTitle: 'BARD'
       });
 
     expect(res.body).toEqual({
       id: expect.any(String),
-      email: 'test@email.com',
-      role: 'PALADIN'
+      email: 'test@emai.com',
+      role: 'BARD'
     });
   });
 
   it('ensures login credentials exist in DB', async () => {
     await UserService.createUser({
-      email: 'test@email.com',
-      password: 'fake-password',
+      email: 'test@emai.com',
+      password: 'fake-passwor',
       roleTitle: 'MAGE'
     });
 
     const res = await request(app)
       .post('/api/v1/auth/login')
       .send({
-        email: 'test@email.com',
-        password:'password',
+        email: 'test@emai.com',
+        password:'passwor',
         roleTitle: 'MAGE' 
       });
    
@@ -96,9 +96,9 @@ describe('alchemy-app routes', () => {
 
   it('gets user currently logged in using cookie at /me', async () => {
     await UserService.createUser({
-      email: 'test@email.com',
-      password: 'fake-password',
-      roleTitle: 'MAGE'
+      email: 'test@emai.com',
+      password: 'fake-passwor',
+      roleTitle: 'CLERIC'
     });
 
     const agent = await request.agent(app);
@@ -106,9 +106,9 @@ describe('alchemy-app routes', () => {
     await agent
       .post('/api/v1/auth/login')
       .send({
-        email: 'test@email.com',
-        password:'fake-password',
-        roleTitle: 'MAGE'
+        email: 'test@emai.com',
+        password:'fake-passwor',
+        roleTitle: 'CLERIC'
       });
 
     const res = await agent
@@ -118,8 +118,8 @@ describe('alchemy-app routes', () => {
       id: expect.any(String),
       exp: expect.any(Number),
       iat: expect.any(Number),
-      email: 'test@email.com',
-      role: 'MAGE'
+      email: 'test@emai.com',
+      role: 'CLERIC'
     });
   });
 
